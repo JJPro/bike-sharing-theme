@@ -25,7 +25,7 @@ class Sidebar extends Component {
           { value: 1, label: 'Men' },
           { value: 2, label: 'Women' }
         ],
-        value: { value: 'All', label: 'All' },
+        value: { value: 0, label: 'All' },
         isMulti: false
       },
       {
@@ -45,7 +45,7 @@ class Sidebar extends Component {
         options: [
           { value: 0, label: 'All' },
         ],
-        value: [{ value: 'All', label: 'All' }],
+        value: [{ value: 0, label: 'All' }],
         isMulti: true
       }
     ];
