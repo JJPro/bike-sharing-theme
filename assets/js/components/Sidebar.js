@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import * as utils from '../lib/sidebarUtils';
 import moment from 'moment';
 import Select from 'react-select';
+import axios from 'axios';
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
 
     const corssFactors = [
-      { label: 'Precipitation', checked: false },
-      { label: 'Temperature High', checked: true },
-      { label: 'Temperature Low', checked: false },
-      { label: 'Humidity', checked: true },
-      { label: 'Visibility', checked: false },
-      { label: 'Ozone', checked: false },
-      { label: 'UV Index', checked: false }
+      { label: 'Precipitation',    value: 'precipAccumulation',     checked: false },
+      { label: 'Temperature High', value: 'apparentTemperatureMax', checked: true  },
+      { label: 'Temperature Low',  value: 'apparentTemperatureMin', checked: false },
+      { label: 'Humidity',         value: 'humidity',               checked: true  },
+      { label: 'Visibility',       value: 'visibility',             checked: false },
+      { label: 'Ozone',            value: 'ozone',                  checked: false },
+      { label: 'UV Index',         value: 'uvIndex',                checked: false }
     ];
     const userFilters = [
       {
@@ -42,18 +43,7 @@ class Sidebar extends Component {
       {
         label: 'Regions',
         options: [
-          { value: 'All', label: 'All' },
-          { value: 'Brookline', label: 'Brookline' },
-          { value: 'Cambridge', label: 'Cambridge' },
-          { value: 'Somerville', label: 'Somerville' },
-          { value: 'Boston', label: 'Boston' },
-          { value: 'Motivate', label: 'Motivate' },
-          { value: '8D', label: '8D' },
-          { value: 'Hingham', label: 'Hingham' },
-          { value: 'Quincy', label: 'Quincy' },
-          { value: 'Everett', label: 'Everett' },
-          { value: 'Lyft', label: 'Lyft' },
-          { value: 'Unassigned', label: 'Unassigned' }
+          { value: 0, label: 'All' },
         ],
         value: [{ value: 'All', label: 'All' }],
         isMulti: true
@@ -71,6 +61,17 @@ class Sidebar extends Component {
     };
 
     this.resetDateRange = this.resetDateRange.bind(this);
+    this.applyFilters = this.applyFilters.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/wp-json/bikes/v1/regions')
+      .then( resp => {
+        if (resp.status == 200){
+
+        }
+        console.log('resp', resp);
+      });
   }
 
   resetDateRange() {
@@ -293,8 +294,12 @@ class Sidebar extends Component {
       currentDateRange: this.state.selectedDateRange,
       shouldEditCustomDateRange: false
     });
-    // TODO:
-    // Apply filters
+
+    this.props.applyFilters({
+      dateRange: this.state.selectedDateRange,
+      corssFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
+      userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)}))
+    });
   }
 
   /**
