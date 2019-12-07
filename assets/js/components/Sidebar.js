@@ -68,9 +68,26 @@ class Sidebar extends Component {
     axios.get('/wp-json/bikes/v1/regions')
       .then( resp => {
         if (resp.status == 200){
-
+          const regions_options = resp.data.map(({region_id, name}) => ({value: region_id, label: name}));
+          this.setState({
+            userFilters: this.state.userFilters.map(
+              filter => {
+                if (filter.label !== 'Regions')
+                  return filter;
+                else {
+                  return {
+                    ...filter,
+                    options: [
+                      { value: 0, label: 'All' },
+                      ...regions_options
+                    ]
+                  }
+                }
+              }
+            )
+          })
         }
-        console.log('resp', resp);
+        // console.log('resp', resp);
       });
   }
 
@@ -320,12 +337,12 @@ class Sidebar extends Component {
       else {
         if (f.isMulti) {
           if (!selectedValue || selectedValue.length === 0) {
-            selectedValue = [{ value: 'All', label: 'All' }];
+            selectedValue = [{ value: 0, label: 'All' }];
           } else {
-            if (f.value[0].value === 'All')
-              selectedValue = selectedValue.filter(v => v.value !== 'All');
-            else if (selectedValue.some(v => v.value === 'All'))
-              selectedValue = [{ value: 'All', label: 'All' }];
+            if (f.value[0].value === 0)
+              selectedValue = selectedValue.filter(v => v.value !== 0);
+            else if (selectedValue.some(v => v.value === 0))
+              selectedValue = [{ value: 0, label: 'All' }];
           }
         }
         return {...f, value: selectedValue};
