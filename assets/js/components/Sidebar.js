@@ -57,7 +57,8 @@ class Sidebar extends Component {
       shouldSelectCustomDateRange: false,
       shouldEditCustomDateRange: false,
       corssFactors,
-      userFilters
+      userFilters,
+      scatteredUserFilter: false
     };
 
     this.resetDateRange = this.resetDateRange.bind(this);
@@ -306,6 +307,18 @@ class Sidebar extends Component {
     });
   }
 
+  updateScatteredUserFilter(selectedFilterType) {
+    this.setState({scatteredUserFilter: selectedFilterType.value});
+  }
+
+  getAvailableScatteredUserFilterOptions() {
+    const options = this.state.userFilters.filter(
+      f => f.isMulti ? f.value[0].label == 'All' : f.value.label == 'All'
+    ).map(o => ({label: o.label, value: o.label}));
+
+    return options;
+  }
+
   applyFilters() {
     this.setState({
       currentDateRange: this.state.selectedDateRange,
@@ -315,7 +328,8 @@ class Sidebar extends Component {
     this.props.applyFilters({
       dateRange: this.state.selectedDateRange,
       crossFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
-      userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)}))
+      userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)})),
+      scatteredUserFilter: this.state.scatteredUserFilter
     });
   }
 
@@ -354,6 +368,7 @@ class Sidebar extends Component {
 
   render() {
     const dateRangeSectionHTML = this.renderDateRangeSectionHTML();
+    const scatteredFilterOptions = this.getAvailableScatteredUserFilterOptions();
     return (
       <div className='filter-container'>
         <div className='filter-header'>
@@ -408,6 +423,21 @@ class Sidebar extends Component {
                 </li>
               ))}
             </ul>
+            {
+              scatteredFilterOptions.length != 0 &&
+              <>
+                <div className="divider"></div>
+                <label className="scattered-filter-control">
+                  Display Separate Lines for:
+                  <Select
+                    className='react-select'
+                    value={{label: this.state.scatteredUserFilter, value: this.state.scatteredUserFilter}}
+                    onChange={selected => this.updateScatteredUserFilter(selected)}
+                    options={[{label: 'None', value: false}, ...this.getAvailableScatteredUserFilterOptions()]}
+                  />
+                </label>
+              </>
+            }
           </div>
         </div>
         <a

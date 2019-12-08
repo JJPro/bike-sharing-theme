@@ -204,4 +204,14 @@ a:hover {
     .react-select {flex-grow: 1;}
   }
 
+  .divider {
+    width: 70%;
+    height: 1px;
+    background-color: $gray-7;
+    margin: 1rem auto;
+  }
+  .scattered-filter-control {
+    font-weight: 500;
+    .react-select {display: inline-block; width: 100%; font-weight: normal; margin-top: 5px;}
+  }
 }

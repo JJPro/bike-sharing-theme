@@ -14,20 +14,38 @@ const Chart = ({weather, trip, enabledFactors}) => {
   ];
   // const colors = ['#C0504E', '#4F81BC', '#44c320', '#36D7B7', '#CDFFD8', '#FF5A52', '#282829', '#764BC4'];
   enabledFactors = corssFactors.filter(f => enabledFactors.includes(f.value));
-  const dataForEnabledFactors = enabledFactors.map(f => ({
+  const dataForEnabledFactors = enabledFactors.map((f, i) => ({
     type: 'column',
     name: f.label,
-    dataPoints: []
+    axisYIndex: i,
+    showInLegend: true,
+    dataPoints: weather.map(w => ({
+      label: w.date,
+      y: w[f.value]
+    }))
   }));
   const dataForTrips = {
     type: 'line',
     name: 'Rentals',
     axisYType: 'secondary',
+    // showInLegend: true,
+    yValueFormString: '#,##0.#',
     dataPoints: trip.map(t => ({
-
+      label: t.date,
+      y: t.count
     }))
   };
+
+  const toggleDataSeries = (e) => {
+    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+      e.dataSeries.visible = false;
+    } else {
+      e.dataSeries.visible = true;
+    }
+    e.chart.render();
+  };
   const options = {
+    animationEnabled: true,
     title: {text: "Cross Factor Bike Sharing Chart"},
     subtitles: [{
       text: "Click Legend to Hide or Unhide Data Series"
@@ -50,7 +68,14 @@ const Chart = ({weather, trip, enabledFactors}) => {
       labelFontColor: "#764BC4",
       tickColor: "#764BC4"
     },
-    // data:
+    toolTip: {
+      shared: true
+    },
+    legend: {
+      cursor: "pointer",
+      itemclick: toggleDataSeries
+    },
+    data: [...dataForEnabledFactors, dataForTrips]
   };
 
   return <div id="chart-container">

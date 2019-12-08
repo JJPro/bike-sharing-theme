@@ -48,7 +48,8 @@ class AnalysisPage extends Component {
         Axios.get(`/wp-json/bikes/v1/trip/${startDate.format('YMMDD')}-${endDate.format('YMMDD')}`, {
           params: {
             gender, age,
-            regions: regions.join(',')
+            regions: regions.join(','),
+            scatteredUserFilter: params.scatteredUserFilter
           }
         })
       ]
