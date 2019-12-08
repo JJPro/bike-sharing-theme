@@ -12,29 +12,8 @@ class ContentArea extends Component {
   }
 
   render() {
-    // const options = {
-    //   animationEnabled: true,
-    //   //exportEnabled: true,
-    //   theme: "light2", //"light1", "dark1", "dark2"
-    //   title: {
-    //     text: "Basic Column Chart in React - CanvasJS"
-    //   },
-    //   data: [
-    //     {
-    //       type: "column",
-    //       dataPoints: [
-    //         { label: "apple", y: 10 },
-    //         { label: "orange", y: 15 },
-    //         { label: "banana", y: 25 },
-    //         { label: "mango", y: 30 },
-    //         { label: "grape", y: 28 }
-    //       ]
-    //     }
-    //   ]
-    // }
 
     const options = {
-      exportEnabled: true,
       animationEnabled: true,
       title:{
         text: "Cross Factor Bike Sharing Chart"
@@ -46,7 +25,7 @@ class ContentArea extends Component {
         title: "Dates"
       },
       axisY: [{
-        title: "Ozone - Units",
+        title: "Ozone",
         titleFontColor: "#C0504E",
         lineColor: "#C0504E",
         labelFontColor: "#C0504E",
@@ -79,7 +58,7 @@ class ContentArea extends Component {
         name: "Temperature",
         axisYIndex: 0,
         showInLegend: true,      
-        yValueFormatString: "#,##0.# Units",
+        yValueFormatString: "#,##0.# °F",
         dataPoints: [
           { label: "12/1/2019",  y: 19.5 },
           { label: "12/2/2019", y: 20 },
@@ -93,7 +72,7 @@ class ContentArea extends Component {
         name: "Ozone",
         axisYIndex: 1,
         showInLegend: true,
-        yValueFormatString: "#,##0.# Units",
+        yValueFormatString: "#,##0.#",
         dataPoints: [
           { label: "12/1/2019", y: 210.5 },
           { label: "12/2/2019", y: 135 },
@@ -107,7 +86,7 @@ class ContentArea extends Component {
         name: "Male Rentals",
         axisYType: "secondary",
         showInLegend: true,
-        yValueFormatString: "#,##0.# Units",
+        yValueFormatString: "#,##0.#",
         dataPoints: [
           { label: "12/1/2019", y: 210.5 },
           { label: "12/2/2019", y: 135 },
@@ -121,7 +100,7 @@ class ContentArea extends Component {
         name: "Female Rentals",
         axisYType: "secondary",
         showInLegend: true,
-        yValueFormatString: "#,##0.# Units",
+        yValueFormatString: "#,##0.#",
         dataPoints: [
           { label: "12/1/2019", y: 110.5 },
           { label: "12/2/2019", y: 235 },
