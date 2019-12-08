@@ -8,4 +8,4 @@ config/ldap.php
 public
 log.txt
 .idea/
-dist
+# dist
