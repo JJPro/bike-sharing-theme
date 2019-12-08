@@ -201,7 +201,10 @@ a:hover {
     align-items: center;
 
     span.label {min-width: 50px; font-weight: 500;}
-    .react-select {flex-grow: 1;}
+    .filter-control-container {flex-grow: 1;
+      .react-select {width: 100%;}
+      .display-individual-control {margin-top: 5px;}
+    }
   }
 
 }

@@ -43,11 +43,17 @@ class AnalysisPage extends Component {
     });
 
     // 2. fetch trip data
-    const [{ gender }, { age }, { regions }] = params.userFilters;
+    const [{ gender, displayIndividually: displayGenderIndividually },
+           { age, displayIndividually: displayAgeIndividually },
+           { regions, displayIndividually: displayRegionsIndividually }] = params.userFilters;
+    console.log('display individually', displayGenderIndividually);
     Axios.get(`/wp-json/bikes/v1/trip/${startDate.format('YMMDD')}-${endDate.format('YMMDD')}`, {
       params: {
         gender, age,
-        regions: regions.join(',')
+        regions: regions.join(','),
+        displayGenderIndividually,
+        displayAgeIndividually,
+        displayRegionsIndividually
       }
     })
     .then(res => {

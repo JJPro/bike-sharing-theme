@@ -26,7 +26,9 @@ class Sidebar extends Component {
           { value: 2, label: 'Women' }
         ],
         value: { value: 0, label: 'All' },
-        isMulti: false
+        isMulti: false,
+        displayIndividually: false,
+        displayIndividuallyControlLabel: 'Display each gender with separate lines'
       },
       {
         label: 'Age',
@@ -38,15 +40,19 @@ class Sidebar extends Component {
           { value: '> 40', label: '> 40' }
         ],
         value: { value: 'All', label: 'All' },
-        isMulti: false
+        isMulti: false,
+        displayIndividually: false,
+        displayIndividuallyControlLabel:
+          'Display each age range with separate lines'
       },
       {
         label: 'Regions',
-        options: [
-          { value: 0, label: 'All' },
-        ],
+        options: [{ value: 0, label: 'All' }],
         value: [{ value: 0, label: 'All' }],
-        isMulti: true
+        isMulti: true,
+        displayIndividually: false,
+        displayIndividuallyControlLabel:
+          'Display each region with separate lines'
       }
     ];
 
@@ -315,7 +321,15 @@ class Sidebar extends Component {
     this.props.applyFilters({
       dateRange: this.state.selectedDateRange,
       corssFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
-      userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)}))
+      userFilters: this.state.userFilters.map(
+        f => {
+          var resultFilter = {[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)}
+          if (f.displayIndividually) {
+            resultFilter = {...resultFilter, displayIndividually: true};
+          }
+          return resultFilter;
+        }
+      )
     });
   }
 
@@ -345,11 +359,23 @@ class Sidebar extends Component {
               selectedValue = [{ value: 0, label: 'All' }];
           }
         }
-        return {...f, value: selectedValue};
+        var resultFilter = {...f, value: selectedValue};
+        if (selectedValue.label !== 'All') {
+          resultFilter = {...resultFilter, displayIndividually: false};
+        }
+        return resultFilter;
       }
     });
 
     this.setState({userFilters: newFilters});
+  }
+
+  toggleUserFilterDisplayIndividuallyControl(item) {
+    this.setState({
+      userFilters: this.state.userFilters.map(
+        f => f.label === item.label ? ({...f, displayIndividually: !f.displayIndividually}) : f
+      )
+    });
   }
 
   render() {
@@ -395,16 +421,28 @@ class Sidebar extends Component {
               {this.state.userFilters.map(item => (
                 <li key={item.label}>
                   <span className='label'>{item.label}</span>
-                  <Select
-                    className='react-select'
-                    value={item.value}
-                    onChange={selected =>
-                      this.updateUserFilters(item, selected)
-                    }
-                    options={item.options}
-                    isMulti={item.isMulti}
-                    closeMenuOnSelect={!item.isMulti}
-                  />
+                  <div className='filter-control-container'>
+                    <Select
+                      className='react-select'
+                      value={item.value}
+                      onChange={selected =>
+                        this.updateUserFilters(item, selected)
+                      }
+                      options={item.options}
+                      isMulti={item.isMulti}
+                      closeMenuOnSelect={!item.isMulti}
+                    />
+                    {(item.value.label === 'All' || item.value[0].label === 'All') && (
+                      <label className='display-individual-control'>
+                        <input
+                          type='checkbox'
+                          onChange={() => this.toggleUserFilterDisplayIndividuallyControl(item) }
+                          checked={item.displayIndividually}
+                        />
+                        {item.displayIndividuallyControlLabel}
+                      </label>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
