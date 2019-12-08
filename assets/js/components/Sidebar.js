@@ -314,7 +314,7 @@ class Sidebar extends Component {
 
     this.props.applyFilters({
       dateRange: this.state.selectedDateRange,
-      corssFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
+      crossFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
       userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)}))
     });
   }
