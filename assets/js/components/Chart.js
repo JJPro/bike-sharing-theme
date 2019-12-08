@@ -7,10 +7,10 @@ const Chart = ({weather, trip, enabledFactors}) => {
     { label: 'Precipitation',    value: 'precipAccumulation',     color: '#C0504E', suffix: 'cm' },
     { label: 'Temperature High', value: 'apparentTemperatureMax', color: '#4F81BC', suffix: '°F' },
     { label: 'Temperature Low',  value: 'apparentTemperatureMin', color: '#44c320', suffix: '°F' },
-    { label: 'Humidity',         value: 'humidity',               color: '#36D7B7' },
-    { label: 'Visibility',       value: 'visibility',             color: '#CDFFD8' },
-    { label: 'Ozone',            value: 'ozone',                  color: '#FF5A52' },
-    { label: 'UV Index',         value: 'uvIndex',                color: '#282829' }
+    { label: 'Humidity',         value: 'humidity',               color: '#36D7B7', suffix: ''   },
+    { label: 'Visibility',       value: 'visibility',             color: '#CDFFD8', suffix: ''   },
+    { label: 'Ozone',            value: 'ozone',                  color: '#FF5A52', suffix: ''   },
+    { label: 'UV Index',         value: 'uvIndex',                color: '#282829', suffix: ''   }
   ];
   // const colors = ['#C0504E', '#4F81BC', '#44c320', '#36D7B7', '#CDFFD8', '#FF5A52', '#282829', '#764BC4'];
   enabledFactors = corssFactors.filter(f => enabledFactors.includes(f.value));
@@ -21,7 +21,7 @@ const Chart = ({weather, trip, enabledFactors}) => {
     showInLegend: true,
     dataPoints: weather.map(w => ({
       label: w.date,
-      y: w[f.value]
+      y: parseFloat(w[f.value])
     }))
   }));
   const dataForTrips = {
@@ -32,9 +32,18 @@ const Chart = ({weather, trip, enabledFactors}) => {
     yValueFormString: '#,##0.#',
     dataPoints: trip.map(t => ({
       label: t.date,
-      y: t.count
+      y: parseInt(t.count)
     }))
   };
+
+  console.log('weather data points', enabledFactors.map(f => weather.map(w => ({
+    label: w.date,
+    y: w[f.value]
+  }))));
+  console.log('trip data points', trip.map(t => ({
+    label: t.date,
+    y: t.count
+  })));
 
   const toggleDataSeries = (e) => {
     if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
