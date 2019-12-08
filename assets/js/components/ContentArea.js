@@ -104,7 +104,7 @@ class ContentArea extends Component {
       },
       {
         type: "line",
-        name: "Rentals",
+        name: "Male Rentals",
         axisYType: "secondary",
         showInLegend: true,
         yValueFormatString: "#,##0.# Units",
@@ -114,6 +114,20 @@ class ContentArea extends Component {
           { label: "12/3/2019", y: 425 },
           { label: "12/4/2019", y: 130 },
           { label: "12/5/2019", y: 528 }
+        ]
+      },
+      {
+        type: "line",
+        name: "Female Rentals",
+        axisYType: "secondary",
+        showInLegend: true,
+        yValueFormatString: "#,##0.# Units",
+        dataPoints: [
+          { label: "12/1/2019", y: 110.5 },
+          { label: "12/2/2019", y: 235 },
+          { label: "12/3/2019", y: 225 },
+          { label: "12/4/2019", y: 230 },
+          { label: "12/5/2019", y: 228 }
         ]
       }]
     };
