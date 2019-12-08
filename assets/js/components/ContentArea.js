@@ -41,10 +41,10 @@ class ContentArea extends Component {
       }],
       axisY2: {
         title: "Rentals",
-        titleFontColor: "#44c320",
-        lineColor: "#44c320",
-        labelFontColor: "#44c320",
-        tickColor: "#44c320"
+        titleFontColor: "#3b9820",
+        lineColor: "#3b9820",
+        labelFontColor: "#3b9820",
+        tickColor: "#3b9820"
       },
       toolTip: {
         shared: true
