@@ -26,24 +26,30 @@ class ContentArea extends Component {
       },
       axisY: [{
         title: "Ozone",
+        titleFontSize: 15,
         titleFontColor: "#C0504E",
         lineColor: "#C0504E",
+        labelFontSize: 10,
         labelFontColor: "#C0504E",
         tickColor: "#C0504E"
       },
       {
         title: "Temperature - °F",
+        titleFontSize: 15,
         suffix: " °F",
         titleFontColor: "#4F81BC",
         lineColor: "#4F81BC",
         labelFontColor: "#4F81BC",
+        labelFontSize: 10,
         tickColor: "#4F81BC"
       }],
       axisY2: {
         title: "Rentals",
+        titleFontSize: 15,
         titleFontColor: "#3b9820",
         lineColor: "#3b9820",
         labelFontColor: "#3b9820",
+        labelFontSize: 10,
         tickColor: "#3b9820"
       },
       toolTip: {
