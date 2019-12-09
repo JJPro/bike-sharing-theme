@@ -40,9 +40,13 @@ const Chart = ({weather, trip, enabledFactors, scatteredUserFilter, selectedRegi
         {label: '40-50', value: '40-50', color: '#cc333f'},
         {label: '> 50',  value: '> 50', color: '#6666FF'},
       ],
-      Regions: selectedRegions
+      Regions: selectedRegions.map( (s, i) => ({
+        value: s.value,
+        label: s.label,
+        color: tripColors[i]
+      }))
     };
-    // console.log('selectedRegions', selectedRegions);
+    console.log('selectedRegions', selectedRegions);
     dataForTrips = allFilters[scatteredUserFilter].map(
       p => ({
         type: 'line',
