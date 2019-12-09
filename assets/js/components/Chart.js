@@ -28,7 +28,7 @@ const Chart = ({weather, trip, enabledFactors, scatteredUserFilter, selectedRegi
   var dataForTrips = [];
   if (scatteredUserFilter){
     const allFilters = {
-      Gender: [{label: 'Unknown', value: '0'}, {label: 'Male', value: '1'}, {label: 'Female', value: '2'}],
+      Gender: [{label: 'Gender Unknown', value: '0'}, {label: 'Male', value: '1'}, {label: 'Female', value: '2'}],
       Age: [
         {label: '<= 16', value: '<= 16'},
         {label: '16-30', value: '16-30'},
