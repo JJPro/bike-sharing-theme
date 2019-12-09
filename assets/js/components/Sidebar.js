@@ -22,8 +22,8 @@ class Sidebar extends Component {
         label: 'Gender',
         options: [
           { value: 0, label: 'All' },
-          { value: 1, label: 'Men' },
-          { value: 2, label: 'Women' }
+          { value: 1, label: 'Male' },
+          { value: 2, label: 'Female' }
         ],
         value: { value: 0, label: 'All' },
         isMulti: false
@@ -32,10 +32,11 @@ class Sidebar extends Component {
         label: 'Age',
         options: [
           { value: 'All', label: 'All' },
-          { value: '<= 16', label: '<= 16' },
-          { value: 'BETWEEN 16 AND 30', label: '16-30' },
+          { value: '<= 20', label: '<= 20' },
+          { value: 'BETWEEN 20 AND 30', label: '20-30' },
           { value: 'BETWEEN 30 AND 40', label: '30-40' },
-          { value: '> 40', label: '> 40' }
+          { value: 'BETWEEN 40 AND 50', label: '40-50' },
+          { value: '> 50', label: '> 50' }
         ],
         value: { value: 'All', label: 'All' },
         isMulti: false

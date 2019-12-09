@@ -41,7 +41,7 @@ class AnalysisPage extends Component {
      *    - endpoint: /wp-json/bikes/v1/trip/YYYYmmdd-YYYYmmdd
      *    - optional query vars:
      *        - gender: 0|1|2
-     *        - age: 'All'|'<= 16'|'BETWEEN 16 AND 30'|'BETWEEN 30 AND 40'|'> 40'
+     *        - age: 'All'|'<= 20'|'BETWEEN 20 AND 30'|'BETWEEN 30 AND 40'|'> 50'
      *        - regions : comma separetad numbers, no space in between
      */
     const {start: startDate, end: endDate} = params.dateRange;

@@ -7,13 +7,13 @@ export const startOfLastMonth = moment(today).subtract(1, 'month').startOf('mont
 export const endOfLastMonth = moment(today).subtract(1, 'month').endOf('month');
 export const dateRangePresets = [
   {
-    label: 'Last Month',
-    range: { start: startOfLastMonth, end: endOfLastMonth },
+    label: 'Last 90 Days',
+    range: { start: moment(endOfLastMonth).subtract(90, 'd'), end: endOfLastMonth },
     selected: true
   },
   {
-    label: 'Last 90 Days',
-    range: { start: moment(endOfLastMonth).subtract(90, 'd'), end: endOfLastMonth },
+    label: 'Last 6 Months',
+    range: { start: moment(endOfLastMonth).subtract(6, 'month'), end: endOfLastMonth },
     selected: false
   },
   {

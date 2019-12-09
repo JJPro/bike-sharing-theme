@@ -30,10 +30,11 @@ const Chart = ({weather, trip, enabledFactors, scatteredUserFilter, selectedRegi
     const allFilters = {
       Gender: [{label: 'Gender Unknown', value: '0'}, {label: 'Male', value: '1'}, {label: 'Female', value: '2'}],
       Age: [
-        {label: '<= 16', value: '<= 16'},
-        {label: '16-30', value: '16-30'},
+        {label: '<= 20', value: '<= 20'},
+        {label: '20-30', value: '20-30'},
         {label: '30-40', value: '30-40'},
-        {label: '> 40',  value: '> 40' },
+        {label: '40-50', value: '40-50'},
+        {label: '> 50',  value: '> 50' },
       ],
       Regions: selectedRegions
     };
@@ -94,7 +95,7 @@ const Chart = ({weather, trip, enabledFactors, scatteredUserFilter, selectedRegi
   };
   const options = {
     animationEnabled: true,
-    title: {text: "Cross Factor Bike Sharing Chart"},
+    title: {text: "Cross Factor Analysis Chart"},
     subtitles: [{
       text: "Click Legend to Hide or Unhide Data Series"
     }],
