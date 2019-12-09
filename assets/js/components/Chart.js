@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../lib/canvasjs-2.3.2/canvasjs.react';
 
-const Chart = ({weather, trip, enabledFactors}) => {
+const Chart = ({weather, trip, enabledFactors, scatteredUserFilter, selectedRegions}) => {
   const CanvasJSChart = CanvasJSReact.CanvasJSChart;
   const corssFactors = [
     { label: 'Precipitation',    value: 'precipAccumulation',     color: '#C0504E', suffix: 'cm' },
@@ -24,26 +24,65 @@ const Chart = ({weather, trip, enabledFactors}) => {
       y: parseFloat(w[f.value])
     }))
   }));
-  const dataForTrips = {
-    type: 'line',
-    name: 'Rentals',
-    axisYType: 'secondary',
-    // showInLegend: true,
-    yValueFormString: '#,##0.#',
-    dataPoints: trip.map(t => ({
-      label: t.date,
-      y: parseInt(t.count)
-    }))
-  };
 
-  console.log('weather data points', enabledFactors.map(f => weather.map(w => ({
-    label: w.date,
-    y: w[f.value]
-  }))));
-  console.log('trip data points', trip.map(t => ({
-    label: t.date,
-    y: t.count
-  })));
+  var dataForTrips = [];
+  if (scatteredUserFilter){
+    const allFilters = {
+      Gender: [{label: 'Unknown', value: '0'}, {label: 'Male', value: '1'}, {label: 'Female', value: '2'}],
+      Age: [
+        {label: '<= 16', value: '<= 16'},
+        {label: '16-30', value: '16-30'},
+        {label: '30-40', value: '30-40'},
+        {label: '> 40',  value: '> 40' },
+      ],
+      Regions: selectedRegions
+    };
+    // console.log('allfil', allFilters);
+    dataForTrips = allFilters[scatteredUserFilter].map(
+      p => ({
+        type: 'line',
+        name: p.label,
+        axisYType: 'secondary',
+        showInLegend: true,
+        yValueFormString: '#,##0.#',
+        dataPoints: trip.filter(t => t[scatteredUserFilter.toLowerCase()] == p.value)
+                        .map(t => ({label: t.date, y: parseInt(t.count)}))
+      })
+    );
+  } else {
+    dataForTrips = [{
+      type: 'line',
+      name: 'Rentals',
+      axisYType: 'secondary',
+      // showInLegend: true,
+      yValueFormString: '#,##0.#',
+      dataPoints: trip.map(t => ({
+        label: t.date,
+        y: parseInt(t.count)
+      }))
+    }];
+  }
+  console.log('dataForTrips', dataForTrips);
+  // const dataForTrips = {
+  //   type: 'line',
+  //   name: 'Rentals',
+  //   axisYType: 'secondary',
+  //   // showInLegend: true,
+  //   yValueFormString: '#,##0.#',
+  //   dataPoints: trip.map(t => ({
+  //     label: t.date,
+  //     y: parseInt(t.count)
+  //   }))
+  // };
+
+  // console.log('weather data points', enabledFactors.map(f => weather.map(w => ({
+  //   label: w.date,
+  //   y: w[f.value]
+  // }))));
+  // console.log('trip data points', trip.map(t => ({
+  //   label: t.date,
+  //   y: t.count
+  // })));
 
   const toggleDataSeries = (e) => {
     if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -84,7 +123,7 @@ const Chart = ({weather, trip, enabledFactors}) => {
       cursor: "pointer",
       itemclick: toggleDataSeries
     },
-    data: [...dataForEnabledFactors, dataForTrips]
+    data: [...dataForEnabledFactors, ...dataForTrips]
   };
 
   return <div id="chart-container">

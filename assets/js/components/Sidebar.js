@@ -313,7 +313,7 @@ class Sidebar extends Component {
 
   getAvailableScatteredUserFilterOptions() {
     const options = this.state.userFilters.filter(
-      f => f.isMulti ? f.value[0].label == 'All' : f.value.label == 'All'
+      f => f.isMulti ? (f.value[0].label == 'All' || f.value.length > 1) : f.value.label == 'All'
     ).map(o => ({label: o.label, value: o.label}));
 
     return options;
@@ -325,11 +325,14 @@ class Sidebar extends Component {
       shouldEditCustomDateRange: false
     });
 
+    const selectedRegionFilterValues = this.state.userFilters[2].value;
+    const allRegions = this.state.userFilters[2].options.filter(f => f.label !== 'All');
     this.props.applyFilters({
       dateRange: this.state.selectedDateRange,
       crossFactors: this.state.corssFactors.filter(f => f.checked).map(f => f.value),
       userFilters: this.state.userFilters.map(f => ({[f.label.toLowerCase()]: (f.isMulti ? f.value.map(v => v.value) : f.value.value)})),
-      scatteredUserFilter: this.state.scatteredUserFilter
+      scatteredUserFilter: this.state.scatteredUserFilter,
+      selectedRegions: selectedRegionFilterValues[0].label === 'All' ? allRegions : selectedRegionFilterValues,
     });
   }
 

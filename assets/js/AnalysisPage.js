@@ -16,7 +16,9 @@ class AnalysisPage extends Component {
       isLoading: false,
       weather: {},
       trip: {},
-      enabledCrossFactors: []
+      enabledCrossFactors: [],
+      scatteredUserFilter: null,
+      selectedRegions: [],
     };
   }
 
@@ -26,8 +28,12 @@ class AnalysisPage extends Component {
    */
   fetchData(params) {
     console.log('params', params);
-    this.setState({isLoading: true});
-    this.setState({enabledCrossFactors: params.crossFactors});
+    this.setState({
+      isLoading: true,
+      enabledCrossFactors: params.crossFactors,
+      scatteredUserFilter: params.scatteredUserFilter,
+      selectedRegions: params.selectedRegions
+    });
     /**
      * 1. fetch weather data within selected date range
      *    - endpoint: /wp-json/bikes/v1/weather/YYYYmmdd-YYYYmmdd
@@ -59,7 +65,7 @@ class AnalysisPage extends Component {
         const {data: weather} = weatherRes;
         const {data: trip} = tripRes;
         console.log('weather', weather);
-        console.log('trip', trip); // [{region_id, trip: [{date, count}]}]
+        console.log('trip', trip); // [{[optional att,] date, count}]
         this.setState({weather, trip, hasData: true, isLoading: false});
       }
     }));
@@ -77,7 +83,13 @@ class AnalysisPage extends Component {
     };
     var ContentArea = <div style={style}><span>Make a selection on the left</span></div>;
     if (this.state.hasData) {
-      ContentArea = <Chart weather={this.state.weather} trip={this.state.trip} enabledFactors={this.state.enabledCrossFactors} />;
+      ContentArea = <Chart
+        weather={this.state.weather}
+        trip={this.state.trip}
+        enabledFactors={this.state.enabledCrossFactors}
+        scatteredUserFilter={this.state.scatteredUserFilter}
+        selectedRegions={this.state.selectedRegions}
+      />;
     }
     if (this.state.isLoading) {
       ContentArea = <div style={style}>
