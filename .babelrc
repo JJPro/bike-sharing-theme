@@ -1,7 +1,18 @@
 {
   "presets": ["@babel/preset-react"],
-  "plugins": [
-    "@babel/plugin-proposal-class-properties",
-    "emotion"
-  ]
+  "env": {
+    "development": {
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "emotion"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "transform-remove-console",
+        "emotion"
+      ]
+    }
+  }
 }
