@@ -23,6 +23,6 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         KEY: ${{ secrets.privateKey }}
       with:
-        source: "./*.php,style.css"
+        source: "./*.php,style.css" 
         target: "/var/www/html/wordpress/wp-content/themes/bike-sharing-theme/"
         overwrite: true
