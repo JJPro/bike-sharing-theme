@@ -19,7 +19,7 @@ jobs:
     - name: Deploy to Production Server
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: ./*.php ./style.css 
+        local: ./*.php
         remote: /var/www/html/wordpress/wp-content/themes/bike-sharing-theme/
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
