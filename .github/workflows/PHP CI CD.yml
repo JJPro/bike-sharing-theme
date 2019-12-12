@@ -24,3 +24,4 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.privateKey }}
+        overwrite: true
