@@ -10,11 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       
-    - name: Install dependencies
-      run: composer install
+#     - name: Install dependencies
+#       run: composer install
       
-    - name: Build
-      run: composer dump-autoload -o
+#     - name: Build
+#       run: composer dump-autoload -o
 
     - name: Deploy to Production Server
       uses: garygrossgarten/github-action-scp@release
