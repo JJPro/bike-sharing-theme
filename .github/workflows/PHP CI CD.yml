@@ -17,10 +17,10 @@ jobs:
 #       run: composer dump-autoload -o
 
     - name: Deploy to Production Server
-      uses: garygrossgarten/github-action-scp@release
+      uses: appleboy/scp-action@master
       with:
-        local: ./*.php
-        remote: /var/www/html/wordpress/wp-content/themes/bike-sharing-theme/
+        local: "*.php,style.css"
+        target: "/var/www/html/wordpress/wp-content/themes/bike-sharing-theme/"
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        privateKey: ${{ secrets.privateKey }}
+        key: ${{ secrets.privateKey }}
