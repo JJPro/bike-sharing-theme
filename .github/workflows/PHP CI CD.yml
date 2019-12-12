@@ -18,10 +18,11 @@ jobs:
 
     - name: Deploy to Production Server
       uses: appleboy/scp-action@master
+      env: 
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.privateKey }}
       with:
-        local: "./*.php,style.css"
+        source: "./*.php,style.css"
         target: "/var/www/html/wordpress/wp-content/themes/bike-sharing-theme/"
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.privateKey }}
         overwrite: true
