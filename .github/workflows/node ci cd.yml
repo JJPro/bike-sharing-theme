@@ -9,20 +9,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    
+
     - name: Setup Node
       uses: actions/setup-node@v1
-      with: 
+      with:
         node-version: '12.x'
-        
+
     - run: npm install
     - run: npm run build
-      
+
     - name: Copy to production server
       uses: garygrossgarten/github-action-scp@release
       with:
         local: dist
-        remote: /var/www/html/wordpress/wp-content/themes/bike-sharing-theme/dist
+        remote: /var/www/wordpress/wp-content/themes/bike-sharing-theme/dist
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.privateKey }}
